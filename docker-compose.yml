@@ -1,8 +1,8 @@
 services:
-  # Nginx Proxy - Reverse proxy automático para contenedores Docker
   nginx-proxy:
     container_name: nginx-proxy
     image: nginxproxy/nginx-proxy:1.9-alpine
+    platform: linux/amd64
     ports:
       - "80:80"
       - "443:443"
@@ -17,6 +17,7 @@ services:
 
   mongodb:
     container_name: mongo-service
+    platform: linux/amd64
     image: mongo:latest
     volumes:
       - ./backend/data:/data
@@ -28,6 +29,7 @@ services:
 
   redis:
     container_name: redis-service
+    platform: linux/amd64
     image: redis:7.0.5-alpine
     expose:
       - "6379"
@@ -37,8 +39,12 @@ services:
 
   backend:
     container_name: backend
+    image: roxsross12/wanderlust-backend:latest
     build:
       context: ./backend
+      platforms:
+        - linux/amd64
+        - linux/arm64
     env_file:
       - ./backend/.env.docker
     environment:
@@ -56,7 +62,12 @@ services:
 
   frontend:
     container_name: frontend
-    build: ./frontend
+    image: roxsross12/wanderlust-frontend:latest
+    build:
+      context: ./frontend
+      platforms:
+        - linux/amd64
+        - linux/arm64
     env_file:
       - ./frontend/.env.docker
     environment:

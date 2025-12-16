@@ -2,7 +2,9 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import connectDB from './config/db.js';
+import { swaggerSpec } from './config/swagger.js';
 import { PORT } from './config/utils.js';
 import authRouter from './routes/auth.js';
 import postsRouter from './routes/posts.js';
@@ -21,6 +23,12 @@ connectDB();
 
 // Connect to redis
 connectToRedis();
+
+// Swagger documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'Wanderlust API Docs',
+}));
 
 // API route
 app.use('/api/posts', postsRouter);

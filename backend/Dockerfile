@@ -1,5 +1,5 @@
 # Stage 1
-FROM node:21-alpine AS backend-builder
+FROM node:21 AS backend-builder
 
 # setup the working dir
 WORKDIR /app
@@ -8,10 +8,13 @@ WORKDIR /app
 COPY . .
 
 # packages install
-RUN npm install
+RUN npm i
+
+# tests
+RUN npm run test
 
 # Stage 2
-FROM node:21-alpine
+FROM node:21-slim
 
 # setup the working dir
 WORKDIR /app

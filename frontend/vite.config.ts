@@ -10,4 +10,15 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    host: true,
+    port: 5173,
+    allowedHosts: [
+      'localhost',
+      '127.0.0.1',
+      '127.0.0.1.nip.io',
+      'wanderlust.127.0.0.1.nip.io',
+      '.nip.io', // Permite todos los subdominios de nip.io
+    ],
+  },
 });
