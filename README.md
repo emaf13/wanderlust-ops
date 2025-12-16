@@ -265,21 +265,103 @@ graph TB
 - MongoDB (si no usas Docker)
 - Redis (si no usas Docker)
 
-## Documentación Completa
+## 📚 Documentación Completa
 
-Este proyecto incluye guías detalladas para diferentes métodos de despliegue:
+Este proyecto incluye guías detalladas ubicadas en [`Assets/docs/`](Assets/docs/) para diferentes aspectos del despliegue:
 
-- 📦 **[Docker Compose Guide](Assets/docs/DOCKER-COMPOSE-GUIDE.md)** - Guía completa para ejecutar con Docker
-  - Comandos principales, workflows comunes, troubleshooting, monitoreo
-  - Escalado, actualización de imágenes, backups de base de datos
-  
-- ☸️ **[Kubernetes Guide](Assets/docs/KUBERNETES-GUIDE.md)** - Despliegue en Kubernetes paso a paso
-  - Comandos kubectl, configuración de recursos, health checks
-  - Debugging, escalado, port forwarding, mejores prácticas
-  
-- 📖 **[Swagger Guide](Assets/docs/SWAGGER-GUIDE.md)** - Documentación interactiva del API
-  - Cómo probar endpoints, autenticación, ejemplos prácticos
-  - Configuración con dominios personalizados, SSL/HTTPS
+### 🐳 Despliegue con Contenedores
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h4>📦 <a href="Assets/docs/DOCKER-COMPOSE-GUIDE.md">Docker Compose Guide</a></h4>
+      <p>Guía completa para ejecutar la aplicación con Docker Compose</p>
+      <ul>
+        <li>✅ Comandos principales (up, down, build, logs)</li>
+        <li>✅ Workflows comunes de desarrollo</li>
+        <li>✅ Troubleshooting y solución de problemas</li>
+        <li>✅ Monitoreo y recursos del sistema</li>
+        <li>✅ Escalado de servicios</li>
+        <li>✅ Actualización de imágenes</li>
+        <li>✅ Backups de base de datos</li>
+        <li>✅ Variables de entorno</li>
+      </ul>
+      <blockquote>
+        📄 <strong>Ideal para:</strong> Desarrollo local y staging rápido
+      </blockquote>
+    </td>
+    <td width="50%" valign="top">
+      <h4>☸️ <a href="Assets/docs/KUBERNETES-GUIDE.md">Kubernetes Guide</a></h4>
+      <p>Despliegue en Kubernetes paso a paso</p>
+      <ul>
+        <li>✅ Comandos kubectl esenciales</li>
+        <li>✅ Configuración de recursos (ConfigMaps, Secrets)</li>
+        <li>✅ Health checks y readiness probes</li>
+        <li>✅ Debugging de pods y servicios</li>
+        <li>✅ Escalado horizontal (HPA)</li>
+        <li>✅ Port forwarding y acceso a servicios</li>
+        <li>✅ Mejores prácticas de producción</li>
+        <li>✅ Monitoreo con kubectl top</li>
+      </ul>
+      <blockquote>
+        📄 <strong>Ideal para:</strong> Producción y entornos cloud
+      </blockquote>
+    </td>
+  </tr>
+</table>
+
+### 📖 Documentación del API
+
+<table>
+  <tr>
+    <td width="100%" valign="top">
+      <h4>🔧 <a href="Assets/docs/SWAGGER-GUIDE.md">Swagger UI Guide</a></h4>
+      <p>Documentación interactiva del API REST con Swagger</p>
+      
+      <details>
+        <summary><strong>🎯 Contenido de la guía</strong></summary>
+        <br/>
+        <ul>
+          <li>✅ Acceso a Swagger UI (local, Docker, Kubernetes)</li>
+          <li>✅ Cómo probar endpoints interactivamente</li>
+          <li>✅ Ejemplos prácticos de cada endpoint</li>
+          <li>✅ Flujos de autenticación (OAuth + JWT)</li>
+          <li>✅ Validaciones y códigos de respuesta</li>
+          <li>✅ Configuración con dominios personalizados</li>
+          <li>✅ Setup para producción con SSL/HTTPS</li>
+          <li>✅ Configuración de CORS</li>
+          <li>✅ Múltiples servidores (dev, staging, prod)</li>
+        </ul>
+      </details>
+      
+      <p><strong>🌐 URLs de acceso:</strong></p>
+      <ul>
+        <li>🐳 Docker: <code>http://api.127.0.0.1.nip.io/api-docs</code></li>
+        <li>☸️ Kubernetes: <code>http://api.wanderlust.127.0.0.1.nip.io/api-docs</code></li>
+        <li>💻 Local: <code>http://localhost:8080/api-docs</code></li>
+      </ul>
+      
+      <blockquote>
+        📄 <strong>Ideal para:</strong> Testing, documentación del API, integración con frontend
+      </blockquote>
+    </td>
+  </tr>
+</table>
+
+### 📂 Estructura de Documentación
+
+```
+Assets/docs/
+├── 📦 DOCKER-COMPOSE-GUIDE.md    # Docker Compose completo
+├── ☸️ KUBERNETES-GUIDE.md         # Kubernetes desde cero
+└── 📖 SWAGGER-GUIDE.md            # API documentation
+```
+
+> [!TIP]
+> **💡 Recomendación de lectura:**
+> 1. Empieza con **Docker Compose** para desarrollo local
+> 2. Lee **Swagger Guide** para entender el API
+> 3. Avanza a **Kubernetes** cuando estés listo para producción
 
 ## �🔧 Instalación
 
