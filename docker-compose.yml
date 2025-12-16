@@ -1,0 +1,82 @@
+services:
+  # Nginx Proxy - Reverse proxy automático para contenedores Docker
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: nginxproxy/nginx-proxy:1.9-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - nginx-certs:/etc/nginx/certs:ro
+      - nginx-vhost:/etc/nginx/vhost.d
+      - nginx-html:/usr/share/nginx/html
+    restart: unless-stopped
+    networks:
+      - wanderlust-network
+
+  mongodb:
+    container_name: mongo-service
+    image: mongo:latest
+    volumes:
+      - ./backend/data:/data
+    expose:
+      - "27017"
+    networks:
+      - wanderlust-network
+    restart: unless-stopped
+
+  redis:
+    container_name: redis-service
+    image: redis:7.0.5-alpine
+    expose:
+      - "6379"
+    networks:
+      - wanderlust-network
+    restart: unless-stopped
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+    env_file:
+      - ./backend/.env.docker
+    environment:
+      - VIRTUAL_HOST=api.127.0.0.1.nip.io
+      - VIRTUAL_PORT=8080
+    expose:
+      - "8080"
+    depends_on:
+      - mongodb
+      - redis
+      - nginx-proxy
+    networks:
+      - wanderlust-network
+    restart: unless-stopped
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    env_file:
+      - ./frontend/.env.docker
+    environment:
+      - VIRTUAL_HOST=127.0.0.1.nip.io,www.127.0.0.1.nip.io
+      - VIRTUAL_PORT=5173
+    expose:
+      - "5173"
+    depends_on:
+      - backend
+      - nginx-proxy
+    networks:
+      - wanderlust-network
+    restart: unless-stopped
+
+networks:
+  wanderlust-network:
+    driver: bridge
+
+volumes:
+  data:
+  nginx-certs:
+  nginx-vhost:
+  nginx-html:

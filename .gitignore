@@ -1,0 +1,50 @@
+# Dependencias
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/
+
+# Nginx Proxy
+nginx/certs/*.pem
+nginx/certs/*.key
+nginx/certs/*.crt
+nginx/html/*
+!nginx/html/.gitkeep
+nginx/vhost.d/*
+!nginx/vhost.d/.gitkeep
+
+# Docker
+.docker/
