@@ -32,6 +32,8 @@
 
 **Roxs Wanderlust** es una plataforma moderna de blog de viajes diseñada con arquitectura de microservicios, lista para despliegue en contenedores y cloud-native. El proyecto demuestra mejores prácticas en desarrollo full-stack, contenedorización y orquestación con Kubernetes.
 
+Este proyecto es una implementación mejorada del proyecto open-source [Wanderlust](https://github.com/krishnaacharyaa/wanderlust) de Krishna Acharya, con enfoque en DevOps, containerización y mejores prácticas de desarrollo.
+
 ### ✨ Características Principales
 
 - 🔐 **Autenticación completa** con JWT y OAuth (GitHub, Google)
@@ -419,33 +421,7 @@ DELETE /api/posts/:id          # Eliminar post (requiere auth)
 
 </details>
 
----
 
-## 🤝 Contribuir
-
-¡Las contribuciones son bienvenidas! Por favor:
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-Consulta [CONTRIBUTING.md](./Assets/docs/CONTRIBUTING.md) para más detalles sobre el proceso de contribución.
-
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT. Ver [LICENSE](LICENSE) para más información.
-
----
-
-## 🙏 Agradecimientos
-
-- Desarrollado con ❤️ por [roxsross](https://github.com/roxsross)
-- Contribuciones de la comunidad
-- Inspirado en mejores prácticas de DevOps y Cloud Native
 
 ---
 
@@ -456,3 +432,7 @@ Este proyecto está bajo la licencia MIT. Ver [LICENSE](LICENSE) para más infor
 [🐛 Reportar Bug](https://github.com/roxsross/roxs-wanderlust-ops/issues) · [✨ Solicitar Feature](https://github.com/roxsross/roxs-wanderlust-ops/issues) · [💬 Discusiones](https://github.com/roxsross/roxs-wanderlust-ops/discussions)
 
 </div>
+
+⭐ **Proyecto Original**
+
+🔗 **Proyecto Original**: [krishnaacharyaa/wanderlust](https://github.com/krishnaacharyaa/wanderlust)

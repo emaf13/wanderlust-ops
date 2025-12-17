@@ -1,0 +1,739 @@
+# 🌍 Roxs Wanderlust Ops
+
+<div align="center">
+
+![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-21+-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-7.0-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-🐳-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-☸️-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-API-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+
+</div>
+
+<div align="center">
+  <h2>El Blog de Viajes Definitivo 🌍 ✈️</h2>
+  <p><em>Una plataforma fullstack moderna para compartir experiencias de viaje</em></p>
+</div>
+
+<div align="center">
+  <img src="Assets/imagenes/2.png" alt="Wanderlust Home" width="800"/>
+</div>
+
+---
+
+## 📖 Acerca del Proyecto
+
+**Wanderlust** es una aplicación web fullstack que permite a los usuarios compartir historias de viajes, descubrir nuevos destinos y conectar con viajeros de todo el mundo. Construida con el stack MERN y optimizada para producción con Redis, Docker y Kubernetes.
+
+Este proyecto es una implementación mejorada del proyecto open-source [Wanderlust](https://github.com/krishnaacharyaa/wanderlust) de Krishna Acharya, con enfoque en DevOps, containerización y mejores prácticas de desarrollo.
+
+## 🎯 Objetivos de Aprendizaje
+
+### Para Desarrolladores
+
+- ✅ **Stack MERN**: Domina MongoDB, Express, React y Node.js
+- ✅ **TypeScript**: Type-safe development en frontend y backend
+- ✅ **Testing**: Jest, React Testing Library, integración y unitarios
+- ✅ **Arquitectura**: Separación de concerns, clean code, mejores prácticas
+
+### Para DevOps
+
+- ✅ **Containerización**: Docker, Docker Compose, multi-stage builds
+- ✅ **Orquestación**: Kubernetes, deployments, services, ingress
+- ✅ **CI/CD**: Automatización de builds y despliegues
+- ✅ **Monitoreo**: Logging, observabilidad, health checks
+
+> [!TIP]
+> **🚀 Este proyecto es tu sandbox de aprendizaje**
+> 
+> Las configuraciones incluidas son puntos de partida. Te invitamos a:
+> - Optimizar Dockerfiles y builds
+> - Mejorar manifiestos de Kubernetes
+> - Implementar pipelines CI/CD
+> - Agregar monitoring y seguridad
+> - Experimentar con diferentes estrategias de deployment
+
+## ✨ Características Principales
+
+<div align="center">
+  <img src="Assets/imagenes/4.png" alt="Posts Feed" width="700"/>
+</div>
+
+### 🎨 Para Usuarios
+
+| Característica | Descripción |
+|----------------|-------------|
+| ⭐ **Posts Destacados** | Resalta las mejores historias en la página principal |
+| 🔍 **Categorías** | Organización por Viaje, Naturaleza, Ciudad, Aventura y Playas |
+| 📝 **CRUD Completo** | Crear, editar y eliminar posts con editor rico |
+| 🌓 **Dark Mode** | Tema oscuro/claro con toggle dinámico |
+| 📱 **Responsive** | Experiencia optimizada en todos los dispositivos |
+
+### 🔧 Para Desarrolladores
+
+| Tecnología | Uso |
+|------------|-----|
+| 🔐 **JWT Auth** | Autenticación segura con HTTP-only cookies |
+| ⚡ **Redis Cache** | Optimización de consultas con TTL configurable |
+| 🐳 **Docker** | Containerización completa con Compose |
+| ☸️ **Kubernetes** | Manifiestos para despliegue en producción |
+| 📖 **Swagger UI** | Documentación interactiva del API |
+| 🧪 **Testing** | Jest + React Testing Library + Supertest |
+
+### 📸 Capturas de Pantalla
+
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <img src="Assets/imagenes/4.png" alt="Frontend" width="100%"/>
+      <br />
+      <b>Pagina principal</b>
+      <br />
+      <sub>Frontend</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="Assets/imagenes/6.png" alt="Backend" width="100%"/>
+      <br />
+      <b>Backend</b>
+      <br />
+      <sub>Backend</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="Assets/imagenes/3.png" alt="crear" width="100%"/>
+      <br />
+      <b>Crear Post</b>
+      <br />
+      <sub>Crea una post para la web</sub>
+    </td>
+
+  <tr>
+    <td align="center" width="33%">
+      <img src="Assets/imagenes/7.png" alt="docker" width="100%"/>
+      <br />
+      <b>Contenedores</b>
+      <br />
+      <sub>Contendores en ejecución</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="Assets/imagenes/8.png" alt="swagger" width="100%"/>
+      <br />
+      <b>Swagger</b>
+      <br />
+      <sub>Documentacion de api con Swagger</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="Assets/imagenes/5.png" alt="Feed de Posts" width="100%"/>
+      <br />
+      <b>📰 Feed de Posts</b>
+      <br />
+      <sub>Exploración de contenido</sub>
+    </td>
+  </tr>
+</table>
+
+## Arquitectura y Flujo de Funcionamiento
+
+### Diagrama de Secuencia - Flujos Principales
+
+```mermaid
+sequenceDiagram
+    actor Usuario
+    participant FE as Frontend<br/>(React)
+    participant BE as Backend<br/>(Express)
+    participant Redis as Redis<br/>(Cache)
+    participant DB as MongoDB<br/>(Database)
+    
+    %% Flujo 1: Autenticación
+    rect rgb(200, 220, 255)
+        Note over Usuario,DB: 🔐 Flujo de Autenticación
+        Usuario->>FE: 1. Login (email, password)
+        FE->>BE: POST /auth/signin
+        BE->>DB: Buscar usuario
+        DB-->>BE: Usuario encontrado
+        BE->>BE: Validar password (bcrypt)
+        BE->>BE: Generar JWT token
+        BE-->>FE: 200 OK + Set-Cookie (JWT)
+        FE-->>Usuario: Redirigir al home
+    end
+    
+    %% Flujo 2: Obtener Posts (con caché)
+    rect rgb(255, 220, 200)
+        Note over Usuario,DB: 📖 Obtener Posts (con Cache)
+        Usuario->>FE: 2. Visitar página de posts
+        FE->>BE: GET /api/posts
+        BE->>Redis: Buscar en cache
+        alt Cache Hit
+            Redis-->>BE: Posts encontrados
+            BE-->>FE: 200 OK + Posts
+        else Cache Miss
+            Redis-->>BE: Cache vacío
+            BE->>DB: Query posts
+            DB-->>BE: Lista de posts
+            BE->>Redis: Guardar en cache (TTL)
+            BE-->>FE: 200 OK + Posts
+        end
+        FE-->>Usuario: Mostrar posts
+    end
+    
+    %% Flujo 3: Crear Post
+    rect rgb(200, 255, 220)
+        Note over Usuario,DB: ✍️ Crear Nuevo Post
+        Usuario->>FE: 3. Crear post (formulario)
+        FE->>FE: Validar datos (Zod)
+        FE->>BE: POST /api/posts + JWT Cookie
+        BE->>BE: Verificar JWT token
+        BE->>BE: Validar datos
+        BE->>DB: Insertar nuevo post
+        DB-->>BE: Post creado
+        BE->>Redis: Invalidar cache
+        BE-->>FE: 201 Created + Post
+        FE-->>Usuario: Mostrar success + redirigir
+    end
+    
+    %% Flujo 4: Ver Detalles
+    rect rgb(255, 240, 200)
+        Note over Usuario,DB: 📄 Ver Detalles de Post
+        Usuario->>FE: 4. Click en post
+        FE->>BE: GET /api/posts/:id
+        BE->>Redis: Buscar post en cache
+        alt Cache Hit
+            Redis-->>BE: Post encontrado
+        else Cache Miss
+            BE->>DB: Query post by ID
+            DB-->>BE: Datos del post
+            BE->>Redis: Guardar en cache
+        end
+        BE-->>FE: 200 OK + Post details
+        FE-->>Usuario: Mostrar detalles completos
+    end
+```
+
+### 📊 Componentes del Sistema
+
+```mermaid
+graph TB
+    subgraph "Client Side"
+        Browser[🌐 Navegador Web]
+    end
+    
+    subgraph "Application Layer"
+        React[⚛️ React App<br/>TypeScript + Vite<br/>Tailwind CSS]
+    end
+    
+    subgraph "API Layer"
+        Express[🚀 Express Server<br/>Node.js 21<br/>JWT Auth]
+    end
+    
+    subgraph "Data Layer"
+        Redis[⚡ Redis Cache<br/>TTL: 120s]
+        MongoDB[🗄️ MongoDB<br/>Posts + Users]
+    end
+    
+    Browser -->|HTTP/HTTPS| React
+    React -->|Axios API Calls| Express
+    Express -->|Read/Write| MongoDB
+    Express -->|Cache Check| Redis
+    Redis -.->|Cache Miss| MongoDB
+    MongoDB -.->|Update Cache| Redis
+    
+    style Browser fill:#FFD700
+    style React fill:#61DAFB
+    style Express fill:#339933,color:#fff
+    style Redis fill:#DC382D,color:#fff
+    style MongoDB fill:#47A248,color:#fff
+```
+
+## 🛠️ Stack Tecnológico
+
+```
+Frontend          Backend           Data              DevOps
+─────────────────────────────────────────────────────────────────
+React 18          Node.js 21        MongoDB 7.0       Docker
+TypeScript 5      Express.js        Redis 7.0         Kubernetes
+Vite              Mongoose                            Nginx Ingress
+Tailwind CSS      JWT + bcrypt                        Swagger UI
+shadcn/ui         Swagger JSDoc
+React Router
+Axios
+Jest              Jest + Supertest
+```
+
+### Tecnologías Clave
+
+- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
+- **Backend**: Node.js 21 + Express + Mongoose + Redis
+- **Database**: MongoDB 7.0 (base de datos) + Redis 7.0 (caché)
+- **DevOps**: Docker + Kubernetes + Nginx + Multi-arch builds
+- **API Docs**: Swagger UI + OpenAPI 3.0
+- **Testing**: Jest + React Testing Library + Supertest
+
+---
+
+## 🚀 Inicio Rápido
+
+### Requisitos
+
+- **Node.js** v18+ y **npm**
+- **Docker** y **Docker Compose** (recomendado)
+- **MongoDB** y **Redis** (solo si no usas Docker)
+
+### Opción 1: Docker Compose (Recomendado)
+
+```bash
+# Clonar el repositorio
+git clone <repository-url>
+cd roxs-wanderlust-ops
+
+# Levantar todos los servicios
+docker-compose up -d
+
+# Acceder a la aplicación
+open http://127.0.0.1.nip.io              # Frontend
+open http://api.127.0.0.1.nip.io/api-docs # Swagger UI
+```
+
+### Opción 2: Instalación Local
+
+```bash
+# Instalar dependencias
+npm run installer
+
+# Configurar variables de entorno
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+
+# Iniciar MongoDB y Redis
+mongod
+redis-server
+
+# Iniciar la aplicación
+npm start
+```
+
+> [!NOTE]
+> **📖 Para instrucciones detalladas, consulta [Getting Started Guide](Assets/docs/GETTING-STARTED.md)**
+
+## 📚 Documentación
+
+Toda la documentación detallada está organizada en [`Assets/docs/`](Assets/docs/):
+
+### 📖 Guías Principales
+
+| Guía | Descripción | Cuándo Usarla |
+|------|-------------|---------------|
+| 🚀 [**Getting Started**](Assets/docs/GETTING-STARTED.md) | Setup completo desde cero<br/>• Instalación local paso a paso<br/>• Configuración de variables de entorno<br/>• Verificación y troubleshooting | Primera vez que usas el proyecto |
+| 🛠️ [**Development Guide**](Assets/docs/DEVELOPMENT.md) | Guía de desarrollo<br/>• Estructura del proyecto<br/>• Scripts y workflows<br/>• Testing y debugging<br/>• Mejores prácticas | Mientras desarrollas features |
+| 🤝 [**Contributing**](Assets/docs/CONTRIBUTING.md) | Cómo contribuir al proyecto<br/>• Código de conducta<br/>• Proceso de PRs<br/>• Estándares de código<br/>• Reportar bugs | Antes de hacer un PR |
+
+### 🐳 Deployment
+
+| Guía | Descripción | Cuándo Usarla |
+|------|-------------|---------------|
+| 📦 [**Docker Compose**](Assets/docs/DOCKER-COMPOSE-GUIDE.md) | Desarrollo con containers<br/>• Comandos y workflows<br/>• Debugging y logs<br/>• Networking | Desarrollo local o staging |
+| ☸️ [**Kubernetes**](Assets/docs/KUBERNETES-GUIDE.md) | Deploy en producción<br/>• kubectl commands<br/>• ConfigMaps y Secrets<br/>• Scaling y monitoring | Producción o cloud |
+
+### 📖 API Reference
+
+| Recurso | URL | Descripción |
+|---------|-----|-------------|
+| 📘 [**Swagger Guide**](Assets/docs/SWAGGER-GUIDE.md) | Ver guía | Cómo usar Swagger UI |
+| 🔗 **Swagger UI** | [Local](http://localhost:8080/api-docs) • [Docker](http://api.127.0.0.1.nip.io/api-docs) • [K8s](http://api.wanderlust.127.0.0.1.nip.io/api-docs) | Documentación interactiva |
+
+---
+
+## �🔧 Instalación
+
+### Opción 1: Instalación Local
+
+1. **Clonar el repositorio**
+```bash
+git clone <repository-url>
+cd roxs-wanderlust-ops
+```
+
+2. **Instalar todas las dependencias**
+```bash
+npm run installer
+```
+
+Este comando instalará las dependencias del root, backend y frontend automáticamente.
+
+3. **Configurar variables de entorno**
+
+Backend (`backend/.env`):
+```env
+PORT=8080
+MONGODB_URI=mongodb://localhost:27017/wanderlust
+JWT_SECRET=tu_secreto_jwt_aqui
+REDIS_HOST=localhost
+REDIS_PORT=6379
+NODE_ENV=development
+```
+
+Frontend (`frontend/.env`):
+```env
+VITE_API_URL=http://localhost:8080/api
+```
+
+4. **Iniciar MongoDB y Redis localmente**
+```bash
+# MongoDB
+mongod
+
+# Redis
+redis-server
+```
+
+5. **Iniciar la aplicación**
+```bash
+npm start
+```
+
+Esto iniciará el frontend en `http://localhost:5173` y el backend en `http://localhost:8080`.
+
+### Opción 2: Con Docker Compose (local) 🐳
+
+```mermaid
+graph LR
+    subgraph "Docker Network: wanderlust-network"
+        subgraph "Reverse Proxy"
+            NGINX[nginx-proxy<br/>:80, :443<br/>nginxproxy/nginx-proxy:1.9]
+        end
+        
+        subgraph "Frontend Container"
+            FE[frontend<br/>Port: 5173<br/>node:21-alpine<br/>VIRTUAL_HOST=127.0.0.1.nip.io]
+        end
+        
+        subgraph "Backend Container"
+            BE[backend<br/>Port: 8080<br/>node:21-alpine<br/>VIRTUAL_HOST=api.127.0.0.1.nip.io]
+        end
+        
+        subgraph "Database Container"
+            MONGO[(MongoDB<br/>mongo-service<br/>Port: 27017<br/>mongo:latest)]
+        end
+        
+        subgraph "Cache Container"
+            REDIS[(Redis<br/>redis-service<br/>Port: 6379<br/>redis:7.0.5-alpine)]
+        end
+    end
+    
+    USER[👤 Usuario] -->|http://127.0.0.1.nip.io| NGINX
+    USER -->|http://api.127.0.0.1.nip.io| NGINX
+    NGINX -->|VIRTUAL_HOST routing| FE
+    NGINX -->|VIRTUAL_HOST routing| BE
+    BE -->|MONGODB_URI| MONGO
+    BE -->|REDIS_URL| REDIS
+    FE -.->|API calls| BE
+    
+    style NGINX fill:#009639,color:#fff
+    style FE fill:#61DAFB
+    style BE fill:#339933,color:#fff
+    style MONGO fill:#47A248,color:#fff
+    style REDIS fill:#DC382D,color:#fff
+    style USER fill:#FFD700
+```
+
+**Arquitectura de Contenedores:**
+
+1. **Clonar el repositorio**
+```bash
+git clone <repository-url>
+cd roxs-wanderlust-ops
+```
+
+2. **Levantar todos los servicios**
+```bash
+docker-compose up -d
+```
+
+3. **Acceder a la aplicación**
+
+| Servicio | URL | Descripción |
+|----------|-----|-------------|
+| 🎨 Frontend | `http://127.0.0.1.nip.io` | Aplicación web |
+| 🔌 Backend API | `http://api.127.0.0.1.nip.io` | REST API |
+| 📖 Swagger UI | `http://api.127.0.0.1.nip.io/api-docs` | Documentación interactiva |
+| 🗄️ MongoDB | `localhost:27017` | Base de datos |
+| ⚡ Redis | `localhost:6379` | Caché |
+
+**📖 Ver la [Guía Completa de Docker Compose](Assets/docs/DOCKER-COMPOSE-GUIDE.md)** para comandos avanzados, troubleshooting y mejores prácticas.
+
+### Opción 3: Con Kubernetes ☸️
+
+```mermaid
+graph TB
+    subgraph "Namespace: wanderlust"
+        subgraph "Ingress Layer"
+            ING_FE[Ingress Frontend<br/>wanderlust.127.0.0.1.nip.io]
+            ING_BE[Ingress Backend<br/>api.wanderlust.127.0.0.1.nip.io]
+        end
+        
+        subgraph "Application Layer"
+            FE_DEP[Deployment: frontend<br/>replicas: 1]
+            BE_DEP[Deployment: backend<br/>replicas: 1]
+            FE_SVC[Service: frontend-service<br/>NodePort: 31000]
+            BE_SVC[Service: backend-service<br/>NodePort: 31100]
+        end
+        
+        subgraph "Data Layer"
+            MONGO_DEP[Deployment: mongo<br/>replicas: 1]
+            REDIS_DEP[Deployment: redis<br/>replicas: 1]
+            MONGO_SVC[Service: mongo-service<br/>Port: 27017]
+            REDIS_SVC[Service: redis-service<br/>Port: 6379]
+        end
+        
+        subgraph "Configuration"
+            CM[ConfigMap<br/>backend-config<br/>frontend-config]
+            SECRET[Secret<br/>backend-secret<br/>JWT_SECRET]
+        end
+    end
+    
+    ING_FE --> FE_SVC
+    ING_BE --> BE_SVC
+    FE_SVC --> FE_DEP
+    BE_SVC --> BE_DEP
+    BE_DEP --> MONGO_SVC
+    BE_DEP --> REDIS_SVC
+    MONGO_SVC --> MONGO_DEP
+    REDIS_SVC --> REDIS_DEP
+    BE_DEP -.->|env vars| CM
+    BE_DEP -.->|secrets| SECRET
+    FE_DEP -.->|env vars| CM
+    
+    style ING_FE fill:#61DAFB
+    style ING_BE fill:#339933
+    style FE_DEP fill:#61DAFB
+    style BE_DEP fill:#339933
+    style MONGO_DEP fill:#47A248
+    style REDIS_DEP fill:#DC382D
+    style CM fill:#FFA500
+    style SECRET fill:#FF6B6B
+```
+
+**Arquitectura de Recursos:**
+
+```bash
+# Crear namespace
+kubectl apply -f kubernetes/namespace.yaml
+
+# Aplicar configuración
+kubectl apply -f kubernetes/configmap.yaml
+kubectl apply -f kubernetes/secret.yaml
+
+# Desplegar servicios
+kubectl apply -f kubernetes/mongodb.yaml
+kubectl apply -f kubernetes/redis.yaml
+kubectl apply -f kubernetes/backend.yaml
+kubectl apply -f kubernetes/frontend.yaml
+kubectl apply -f kubernetes/ingress.yaml
+
+# Verificar
+kubectl get all -n wanderlust
+```
+
+**Acceso:**
+- Frontend: `http://wanderlust.127.0.0.1.nip.io`
+- Backend: `http://api.wanderlust.127.0.0.1.nip.io`
+- Swagger: `http://api.wanderlust.127.0.0.1.nip.io/api-docs`
+
+**📖 Ver la [Guía Completa de Kubernetes](Assets/docs/KUBERNETES-GUIDE.md)** para configuración detallada, troubleshooting y comandos útiles.
+
+## 📝 Scripts Disponibles
+
+### Root
+```bash
+npm start              # Inicia frontend y backend concurrentemente
+npm run installer      # Instala todas las dependencias
+npm run start-frontend # Solo inicia el frontend
+npm run start-backend  # Solo inicia el backend
+```
+
+### Backend
+```bash
+npm start              # Inicia el servidor con nodemon
+npm test               # Ejecuta tests con coverage
+npm run format         # Formatea código con Prettier
+npm run check          # Verifica formato del código
+```
+
+### Frontend
+```bash
+npm run dev            # Inicia servidor de desarrollo
+npm run build          # Build para producción
+npm run preview        # Preview del build de producción
+npm test               # Ejecuta tests
+npm run lint           # Linter con ESLint
+npm run format         # Formatea código con Prettier
+```
+
+## 🏗️ Estructura del Proyecto
+
+```
+roxs-wanderlust-ops/
+├── backend/              # API REST con Node.js/Express
+│   ├── api/             # Entry point para Vercel
+│   ├── config/          # Configuración de DB y utilidades
+│   ├── controllers/     # Lógica de negocio
+│   ├── models/          # Modelos de MongoDB
+│   ├── routes/          # Definición de rutas
+│   ├── services/        # Servicios (Redis, etc.)
+│   ├── utils/           # Utilidades y middleware
+│   └── tests/           # Tests unitarios e integración
+├── frontend/            # SPA con React + TypeScript
+│   ├── src/
+│   │   ├── components/  # Componentes reutilizables
+│   │   ├── pages/       # Páginas de la aplicación
+│   │   ├── layouts/     # Layouts (header, footer)
+│   │   ├── utils/       # Funciones auxiliares
+│   │   └── types/       # Tipos de TypeScript
+│   └── public/          # Assets estáticos
+├── database/            # Configuración de base de datos
+└── docker-compose.yml   # Orquestación de contenedores
+```
+
+## 🧪 Testing
+
+### Backend
+```bash
+cd backend
+npm test
+```
+- Tests unitarios de controladores
+- Tests de integración de API
+- Coverage reports generados automáticamente
+
+### Frontend
+```bash
+cd frontend
+npm test
+```
+- Tests de componentes con React Testing Library
+- Tests de integración de páginas
+- Mocks configurados para assets
+
+## 🐳 Docker
+
+### Servicios en Docker Compose
+
+| Servicio | Puerto | Descripción |
+|----------|--------|-------------|
+| frontend | 5173 | Aplicación React |
+| backend | 31100 | API REST |
+| mongodb | 27017 | Base de datos |
+| redis | 6379 | Caché (interno) |
+
+### Comandos útiles de Docker
+
+```bash
+# Levantar servicios
+docker-compose up -d
+
+# Ver logs
+docker-compose logs -f [servicio]
+
+# Detener servicios
+docker-compose down
+
+# Rebuild específico
+docker-compose up --build [servicio]
+
+# Acceder a MongoDB
+docker exec -it mongo-service mongosh
+
+# Acceder a Redis
+docker exec -it redis-service redis-cli
+```
+
+## 🔐 Seguridad
+
+- ✅ Passwords hasheados con bcryptjs
+- ✅ JWT tokens almacenados en HTTP-only cookies
+- ✅ CORS configurado
+- ✅ Validación de entrada con Zod
+- ✅ Variables de entorno para secretos
+- ✅ Sanitización de datos con Mongoose
+
+## 🌐 Demo
+
+Visita la versión en vivo del proyecto original: [wanderlust-beta.vercel.app](https://wanderlust-beta.vercel.app/)
+
+## 🙏 Créditos y Reconocimientos
+
+Este proyecto es un fork/implementación basada en el proyecto open-source **Wanderlust** creado por [Krishna Acharya](https://github.com/krishnaacharyaa).
+
+- 📦 **Repositorio Original**: [krishnaacharyaa/wanderlust](https://github.com/krishnaacharyaa/wanderlust)
+- ⭐ **Stars**: 280+ estrellas en GitHub
+- 🤝 **Contributors**: 44+ contribuidores
+- 🏆 **Open Source Program**: Parte de GirlScript Summer of Code 2024
+
+Agradecemos a todos los contribuidores del proyecto original por crear esta increíble base educativa para aprender el stack MERN.
+
+### Mejoras en Esta Versión
+
+- ✅ Integración completa de Redis para caché
+- ✅ Dockerización completa con Docker Compose
+- ✅ Scripts optimizados para desarrollo
+- ✅ Configuración mejorada de ambiente
+- ✅ Testing expandido
+- ✅ Documentación en español
+
+## 🤝 Contribución
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto es de código abierto y está disponible bajo la [Licencia MIT](LICENSE).
+
+## 👥 Autores
+
+- **Rox** - Implementación y mejoras operacionales
+- **[Krishna Acharya](https://github.com/krishnaacharyaa)** - Proyecto original Wanderlust
+- **Comunidad Open Source** - 44+ contribuidores del proyecto original
+
+## 💻 Stack MERN
+
+Este proyecto es un ejemplo completo del stack MERN:
+- **M**ongoDB - Base de datos NoSQL
+- **E**xpress.js - Framework web para Node.js
+- **R**eact - Biblioteca de UI
+- **N**ode.js - Entorno de ejecución JavaScript
+
+Además incorpora:
+- **TypeScript** para type safety
+- **Redis** para caché distribuido
+- **Docker** para containerización
+- **Jest** para testing
+
+## 🌟 Temas de GitHub
+
+`react` `javascript` `typescript` `mern` `mern-stack` `mongodb` `express` `nodejs` `tailwind-css` `docker` `redis` `jwt` `blog` `travel` `webapp`
+
+## 📞 Soporte
+
+Si tienes alguna pregunta o problema:
+- 🐛 Abre un [issue](../../issues) en el repositorio
+- 💬 Consulta el proyecto original: [krishnaacharyaa/wanderlust](https://github.com/krishnaacharyaa/wanderlust)
+- 📧 Contacta al equipo de desarrollo
+
+## 💖 Muestra tu Apoyo
+
+Si encuentras este proyecto interesante e inspirador, por favor considera mostrar tu apoyo dándole una estrella en GitHub. Tu estrella ayuda mucho a alcanzar más desarrolladores y nos anima a seguir mejorando el proyecto.
+
+---
+
+⭐ **Si te gusta este proyecto, no olvides darle una estrella en GitHub!**
+
+🔗 **Proyecto Original**: [krishnaacharyaa/wanderlust](https://github.com/krishnaacharyaa/wanderlust)
+
+
