@@ -11,6 +11,7 @@ package-lock.json
 .env.*.local
 *.env
 !.env.example
+.env.docker
 
 # Build outputs
 dist/
@@ -48,3 +49,12 @@ nginx/vhost.d/*
 
 # Docker
 .docker/
+*.token
+
+# Kubernetes Secrets (NUNCA commitear)
+kubernetes/secret.yaml
+
+# Archivos temporales
+*.txt
+*.log
+*.tmp

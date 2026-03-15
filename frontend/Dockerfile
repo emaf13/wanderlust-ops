@@ -1,32 +1,32 @@
-# ------------------- Stage 1: Build Stage ------------------------------
-FROM node:21 AS frontend-builder
+# Stage 1: Build
+FROM node:21-alpine AS frontend-builder
 
-# Set the working directory to /app
 WORKDIR /app
 
-# Copy the package.json and package-lock.json for dependency installation
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
-
-# Copy the rest of the application code
 COPY . .
 
-# ------------------- Stage 2: Final Stage ------------------------------
-FROM node:21-slim
+# Variable de entorno para Vite
+ARG VITE_API_PATH=http://localhost:3001
+ENV VITE_API_PATH=$VITE_API_PATH
 
-# Set the working directory to /app
-WORKDIR /app
+# Build para producción
+RUN npm run build
 
-# Copy built assets and dependencies from frontend-builder stage
-COPY --from=frontend-builder /app .
+# Stage 2: Serve con nginx (imagen ligera)
+FROM nginx:alpine
 
-# Copy the .env.sample file to .env.local
-COPY .env.docker .env.local
+# Copiar build estático
+COPY --from=frontend-builder /app/dist /usr/share/nginx/html
 
-# Expose port 5173 for the Node.js application
-EXPOSE 5173
+# Copiar configuración nginx personalizada
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Define the default command to run the application in development mode
-CMD ["npm", "run", "dev", "--", "--host"]
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

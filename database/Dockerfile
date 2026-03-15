@@ -1,7 +1,6 @@
-FROM mongo
+FROM mongo:7.0
 
-WORKDIR mongo
+# Documentación del puerto
+EXPOSE 27017
 
-COPY .  .
-
-ENTRYPOINT ["mongod"]
+# No necesitamos ENTRYPOINT ni CMD (la imagen ya lo tiene)

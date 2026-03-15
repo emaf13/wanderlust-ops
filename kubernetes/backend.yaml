@@ -6,19 +6,22 @@ metadata:
   labels:
     app: backend
 spec:
-  replicas: 1
+  replicas: 2  # Alta disponibilidad
   selector:
     matchLabels:
       app: backend
   template:
     metadata:
-      name: backend
       labels:
         app: backend
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
       containers:
         - name: backend
-          image: roxsross12/wanderlust-backend:v1.0.3
+          image: emaf13/wanderlust-backend:v1.0.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           envFrom:
@@ -33,6 +36,18 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 3
 ---
 apiVersion: v1
 kind: Service
@@ -40,11 +55,10 @@ metadata:
   name: backend-service
   namespace: wanderlust
 spec:
-  type: NodePort
+  type: ClusterIP  # Cambiado a ClusterIP (más seguro)
   selector:
     app: backend
   ports:
     - port: 8080
       targetPort: 8080
       protocol: TCP
-      nodePort: 31100

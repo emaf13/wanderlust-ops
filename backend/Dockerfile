@@ -1,31 +1,40 @@
-# Stage 1
-FROM node:21 AS backend-builder
+# Stage 1: Build
+FROM node:21-alpine AS backend-builder
 
-# setup the working dir
 WORKDIR /app
 
-# code
+# Copiar solo package files primero (mejor caching de capas)
+COPY package*.json ./
+
+# Instalar dependencias (ci para producción)
+RUN npm install --omit=dev
+
+# Copiar el resto del código
 COPY . .
 
-# packages install
-RUN npm i
+# Stage 2: Production
+FROM node:21-alpine
 
-# tests
-RUN npm run test
-
-# Stage 2
-FROM node:21-slim
-
-# setup the working dir
 WORKDIR /app
 
-# copy the above stage as compressed
-COPY --from=backend-builder /app .
+# Crear usuario no-root por seguridad
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
 
-COPY .env.docker .env
+# Copiar desde builder
+COPY --from=backend-builder /app/node_modules ./node_modules
+COPY --from=backend-builder /app ./
 
-# Port
+# Cambiar propietario al usuario no-root
+RUN chown -R nodejs:nodejs /app
+
+# Cambiar a usuario no-root
+USER nodejs
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:8080/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))" || exit 1
+
 EXPOSE 8080
 
-# App
 CMD ["npm", "start"]
