@@ -1,0 +1,60 @@
+name: CI - Backend
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/ci-backend.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Run tests
+        working-directory: ./backend
+        run: npm test
+        continue-on-error: true
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-backend:${{ github.sha }} ./backend
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-backend:${{ github.sha }}'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-backend:${{ github.sha }}
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-backend:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-backend:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-backend:latest

@@ -1,0 +1,65 @@
+name: CD - Deploy to Kubernetes
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'kubernetes/**'
+      - '.github/workflows/cd-deploy.yml'
+  workflow_run:
+    workflows: ["CI - Backend", "CI - Frontend"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.0'
+
+      - name: Configure kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Verify cluster connection
+        run: kubectl cluster-info
+
+      - name: Update image tags in manifests
+        run: |
+          sed -i "s|${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-backend:.*|${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-backend:${{ github.sha }}|g" kubernetes/backend.yaml
+          sed -i "s|${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-frontend:.*|${{ secrets.DOCKERHUB_USERNAME }}/wanderlust-frontend:${{ github.sha }}|g" kubernetes/frontend.yaml
+
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f kubernetes/namespace.yaml
+          kubectl apply -f kubernetes/configmap.yaml
+          kubectl apply -f kubernetes/secret.yaml
+          kubectl apply -f kubernetes/mongodb.yaml
+          kubectl apply -f kubernetes/redis.yaml
+          kubectl apply -f kubernetes/backend.yaml
+          kubectl apply -f kubernetes/frontend.yaml
+          kubectl apply -f kubernetes/ingress.yaml
+
+      - name: Wait for deployments to be ready
+        run: |
+          kubectl wait --for=condition=available deployment/backend-deployment -n wanderlust --timeout=300s
+          kubectl wait --for=condition=available deployment/frontend-deployment -n wanderlust --timeout=300s
+
+      - name: Health check
+        run: |
+          echo "=== Pods ==="
+          kubectl get pods -n wanderlust
+          echo "=== Deployments ==="
+          kubectl get deployments -n wanderlust
+          echo "=== Services ==="
+          kubectl get svc -n wanderlust
