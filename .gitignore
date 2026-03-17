@@ -52,6 +52,7 @@ nginx/vhost.d/*
 
 # Kubernetes Secrets (NUNCA commitear)
 kubernetes/secret.yaml
+kubernetes/grafana-secret.yaml
 
 # Archivos temporales
 *.txt
