@@ -1,0 +1,29 @@
+# Prometheus + Grafana Stack
+# Instalado con: helm install monitoring prometheus-community/kube-prometheus-stack -f helm/prometheus-stack-values.yaml -n monitoring
+
+grafana:
+  admin:
+    existingSecret: grafana-admin-secret
+    userKey: admin-user
+    passwordKey: admin-password
+  service:
+    type: ClusterIP
+
+prometheus:
+  service:
+    type: ClusterIP
+  prometheusSpec:
+    retention: 7d
+    resources:
+      requests:
+        memory: 512Mi
+        cpu: 500m
+      limits:
+        memory: 1Gi
+        cpu: 1000m
+
+alertmanager:
+  enabled: true
+
+nodeExporter:
+  enabled: true
