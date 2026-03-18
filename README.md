@@ -436,3 +436,305 @@ DELETE /api/posts/:id          # Eliminar post (requiere auth)
 ⭐ **Proyecto Original**
 
 🔗 **Proyecto Original**: [krishnaacharyaa/wanderlust](https://github.com/krishnaacharyaa/wanderlust)
+
+
+---
+
+
+## 🚀 Quick Start - Guía de Setup (Proyecto Final Bootcamp DevOps: Contenedores y Orquestación)
+
+Querés levantar este proyecto en tu entorno local?
+
+**Tenemos una guía completa paso a paso:** **[SETUP.md](SETUP.md)**
+
+**Qué incluye la guía:**
+
+| **Paso** | **Descripción** | **Tiempo** |
+|---|---|---|
+| 1 | Clonar repositorio + Crear cluster Kind | 5 min |
+| 2 | Crear secrets (backend + Grafana) | 3 min |
+| 3 | Aplicar manifiestos de Kubernetes | 5 min |
+| 4 | Seed de base de datos MongoDB | 3 min |
+| 5 | Instalar Prometheus + Grafana | 5 min |
+| 6 | Instalar ArgoCD (opcional) | 5 min |
+| 7 | Verificar y acceder a la app | 5 min |
+| **TOTAL** | **Setup completo** | **~30 min** |
+
+**La guía incluye:**
+- ✅ Prerrequisitos y versiones de herramientas
+- ✅ Comandos copy-paste para cada paso
+- ✅ Troubleshooting de errores comunes
+- ✅ Limitaciones conocidas y workarounds
+- ✅ Links a recursos adicionales
+
+**Listo para empezar?** → **[Ir a SETUP.md](SETUP.md)**
+
+---
+
+## ⭐ Modificaciones Realizadas (Proyecto Final Bootcamp DevOps: Contenedores y Orquestación)
+
+> **Nota:** Este repositorio es un fork del proyecto original [roxs-wanderlust-ops](https://github.com/roxsross/roxs-wanderlust-ops). Las siguientes modificaciones fueron implementadas como parte del **Proyecto Final del Bootcamp DevOps: Contenedores y Orquestación** por [@emaf13](https://github.com/emaf13).
+
+### 🚀 CI/CD con GitHub Actions
+
+**Archivos agregados:**
+
+- `.github/workflows/ci-backend.yml` - CI para backend (build, test, security, push)
+- `.github/workflows/ci-frontend.yml` - CI para frontend (build, security, push)
+- `.github/workflows/cd-deploy.yml` - CD para Kubernetes (deploy automático)
+
+**Estado del Pipeline:**
+
+| **Workflow** | **Trigger** | **Estado** |
+|---|---|---|
+| CI - Backend | Push a main/master | ✅ Funcional |
+| CI - Frontend | Push a main/master | ✅ Funcional |
+| CD - Deploy | Después de CI exitoso | ⚠️ Requiere cloud K8s |
+
+**Características:**
+
+- Build automático de Docker images con tag del commit SHA
+- Tests automáticos con `npm ci` y `npm test`
+- Escaneo de seguridad con **Trivy** (CRITICAL/HIGH vulnerabilities)
+- Push a Docker Hub con tags `latest` y `<commit-sha>`
+- Deploy automático a Kubernetes con health checks
+
+**Ver en GitHub:** https://github.com/emaf13/wanderlust-ops/actions
+
+---
+
+### 🔄 GitOps con ArgoCD
+
+**Implementación:**
+
+- ArgoCD instalado en el cluster (namespace `argocd`)
+- Application configurada para sync automático desde el repo
+- Self-healing y auto-prune habilitados
+
+**Acceso a la UI:**
+
+```bash
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+# URL: https://localhost:8080
+# Usuario: admin
+# Password: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
+
+**Ver estado:**
+
+```bash
+kubectl get applications -n argocd
+```
+
+---
+
+### 📊 Observabilidad (Prometheus + Grafana)
+
+**Implementación:**
+
+- Prometheus instalado para recolección de métricas
+- Grafana instalado para visualización (dashboards pre-configurados)
+- Alertmanager configurado para alertas
+- Node Exporter para métricas de nodos
+
+**Acceso:**
+
+```bash
+# Grafana
+kubectl port-forward -n monitoring svc/monitoring-grafana 3000:80
+# URL: http://localhost:3000
+# Usuario: admin
+# Password: <guardada en secret grafana-admin-secret>
+
+# Prometheus
+kubectl port-forward -n monitoring svc/monitoring-prometheus 9090:9090
+# URL: http://localhost:9090
+```
+
+**Dashboards disponibles:**
+
+- Kubernetes / Compute Resources / Cluster
+- Kubernetes / Compute Resources / Namespace (pods)
+- Prometheus / Overview
+- Node Exporter / Nodes
+
+---
+
+### 🔒 Seguridad Implementada
+
+| **Medida** | **Implementación** | **Estado** |
+|---|---|---|
+| **Escaneo de vulnerabilidades** | Trivy en CI pipeline | ✅ Implementado |
+| **Gestión de secrets** | Kubernetes Secrets (excluidos de git) | ✅ Implementado |
+| **Non-root containers** | Usuarios no-root en Dockerfiles | ✅ Implementado |
+| **Resource limits** | CPU/Memory limits en deployments | ✅ Implementado |
+| **Network policies** | Services con puertos específicos | ✅ Implementado |
+| **Image tags** | Tags específicos (no solo latest) | ✅ Implementado |
+
+**Secrets excluidos de git:**
+
+```bash
+# .gitignore incluye:
+kubernetes/secret.yaml
+kubernetes/grafana-secret.yaml
+
+# Template seguro disponible:
+kubernetes/grafana-secret.yaml.template
+```
+
+**Crear secrets manualmente:**
+
+```bash
+# Backend JWT Secret
+kubectl create secret generic backend-secret -n wanderlust \
+  --from-literal=JWT_SECRET="$(openssl rand -hex 32)"
+
+# Grafana Admin Password
+kubectl create secret generic grafana-admin-secret -n monitoring \
+  --from-literal=admin-user="admin" \
+  --from-literal=admin-password="$(openssl rand -hex 16)"
+```
+
+---
+
+### 🐛 Fixes Implementados
+
+| **Problema**             | **Solución**                                       | **Archivos modificados**      |
+| ------------------------ | -------------------------------------------------- | ----------------------------- |
+| Frontend image rendering | API devuelve `imageLink`, frontend usa `imageLink` | frontend/src/components/*.tsx |
+| Featured posts vacíos    | Campo `isFeaturedPost` en MongoDB                  | Seed script corregido         |
+| Nginx permissions        | SecurityContext ajustado                           | kubernetes/frontend.yaml      |
+| Health check backend     | TCP socket en lugar de HTTP                        | kubernetes/backend.yaml       |
+
+---
+
+### ⚠️ Limitaciones Conocidas
+
+| **Limitación**        | **Descripción**                               | **Impacto**                                  | **Workaround**                                      |
+| --------------------- | --------------------------------------------- | -------------------------------------------- | --------------------------------------------------- |
+| **CD GitHub Actions** | Requiere cluster K8s accesible desde internet | Deploy automático no funciona con Kind local | Usar ArgoCD para GitOps local                       |
+| **Kind local**        | No tiene LoadBalancer real                    | Ingress requiere port-forward                | `kubectl port-forward` para testing                 |
+| **Imágenes Unsplash** | URLs externas pueden expirar                  | Algunas imágenes pueden no cargar            | Seed DB con URLs válidas                            |
+| **Logs (Loki)**       | No instalado                                  | No hay agregación de logs centralizada       | Logs disponibles via `kubectl logs`                 |
+| **Traces (Tempo)**    | No instalado                                  | No hay distributed tracing                   | Se implementará a futuro. No requerido por bootcamp |
+| **Password Grafana**  | En Kubernetes Secret (no en git)              | Requiere creación manual del secret          | Documentado en template                             |
+
+---
+
+### 📝 Decisiones de Diseño
+
+| **Decisión** | **Opciones Consideradas** | **Elección** | **Justificación** |
+|---|---|---|---|
+| **CI/CD Platform** | GitHub Actions vs GitLab CI vs Jenkins | GitHub Actions | Integración nativa con el repo, gratuito para proyectos públicos |
+| **GitOps Tool** | ArgoCD vs Flux | ArgoCD | UI intuitiva, comunidad activa, mejor documentación |
+| **Container Registry** | Docker Hub vs ECR vs GCR | Docker Hub | Gratuito, simple, suficiente para el proyecto |
+| **Kubernetes Local** | Kind vs Minikube vs Docker Desktop | Kind | Liviano, rápido, diseñado para CI/CD testing |
+| **Health Checks** | HTTP vs TCP | TCP (backend) | Más simple, menos puntos de fallo para este caso |
+| **Secret Management** | Sealed Secrets vs Kubernetes Secrets | K8s Secrets | Suficiente para proyecto académico, menos complejidad |
+| **Observabilidad** | Prometheus+Grafana vs Datadog vs New Relic | Prometheus+Grafana | Open source, estándar de la industria, self-hosted |
+
+---
+
+## 🎓 Proyecto Final Bootcamp DevOps Contenedores y Orquestación
+
+### Requerimientos Cubiertos
+
+| **Requerimiento** | **Estado** | **Evidencia** |
+|---|---|---|
+| Cluster Kubernetes | ✅ | Kind local funcionando |
+| App desplegada | ✅ | Frontend + Backend + MongoDB + Redis |
+| CI/CD Pipeline | ✅ | GitHub Actions (CI funcional, CD documentado) |
+| GitOps con ArgoCD | ✅ | Application configurada con auto-sync |
+| Observabilidad | ✅ | Prometheus + Grafana instalados |
+| Seguridad (SAST) | ✅ | Trivy scanning en CI |
+| Gestión de Secrets | ✅ | Kubernetes Secrets excluidos de git |
+| Documentación | ✅ | Este README |
+
+### Cómo Evaluar Este Proyecto
+
+1. **CI/CD Pipeline:**
+   - Ver [GitHub Actions](https://github.com/emaf13/wanderlust-ops/actions)
+   - Verificar que CI Backend y Frontend pasan ✅
+   - Ver logs de Trivy scanning
+
+2. **Docker Images:**
+   - Backend: https://hub.docker.com/r/emaf13/wanderlust-backend
+   - Frontend: https://hub.docker.com/r/emaf13/wanderlust-frontend
+
+3. **ArgoCD:**
+
+```bash
+kubectl get applications -n argocd
+```
+
+4. **Grafana Dashboards:**
+
+```bash
+kubectl port-forward -n monitoring svc/monitoring-grafana 3000:80 &
+# http://localhost:3000
+```
+
+5. **App Local:**
+
+```bash
+# Crear cluster
+kind create cluster --name wanderlust-final
+
+# Crear secrets
+kubectl create secret generic backend-secret -n wanderlust \
+  --from-literal=JWT_SECRET="$(openssl rand -hex 32)"
+
+kubectl create secret generic grafana-admin-secret -n monitoring \
+  --from-literal=admin-user="admin" \
+  --from-literal=admin-password="$(openssl rand -hex 16)"
+
+# Deploy
+kubectl apply -f kubernetes/
+
+# Verificar
+kubectl get pods -n wanderlust
+kubectl get pods -n monitoring
+
+# Port-forward
+kubectl port-forward -n wanderlust svc/frontend-service 3000:80
+```
+
+---
+
+## 📊 Estado del Proyecto
+
+**Última actualización:** Marzo 2026
+
+| **Componente** | **Versión** | **Estado** |
+|---|---|---|
+| Kubernetes | 1.35 (Kind) | ✅ Estable |
+| Backend | v1.0.2 | ✅ Funcional |
+| Frontend | v1.0.5 | ✅ Funcional |
+| MongoDB | 7.0 | ✅ Estable |
+| Redis | latest | ✅ Estable |
+| ArgoCD | latest | ✅ Synced |
+| Prometheus | v3.10.0 | ✅ Funcional |
+| Grafana | latest | ✅ Funcional |
+
+---
+
+## 🤝 Contribuir
+
+Este es un proyecto académico del Bootcamp DevOps: Contenedores y Orquestación. Para contribuciones reales, por favor referirse al repositorio original.
+
+---
+
+## 📄 Licencia
+
+Misma licencia que el repositorio original.
+
+---
+
+## 👤 Autor de las Modificaciones
+
+**Ema** - [@emaf13](https://github.com/emaf13)
+
+Proyecto Final Bootcamp DevOps: Contenedores y Orquestación - Marzo 2026
+
+---
+
