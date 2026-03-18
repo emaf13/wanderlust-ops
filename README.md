@@ -696,7 +696,7 @@ kubectl get pods -n wanderlust
 kubectl get pods -n monitoring
 
 # Port-forward
-kubectl port-forward -n wanderlust svc/frontend-service 3000:80
+kubectl port-forward -n wanderlust svc/frontend-service 8000:80
 ```
 
 ---

@@ -298,13 +298,13 @@ kubectl get svc -n monitoring
 ### Frontend (App Principal)
 
 ```bash
-kubectl port-forward -n wanderlust svc/frontend-service 3000:80 &
+kubectl port-forward -n wanderlust svc/frontend-service 8000:80 &
 ```
 
 **En tu navegador:**
 
 ```
-URL: http://localhost:3000
+URL: http://localhost:8000
 ```
 
 ---
@@ -387,7 +387,7 @@ Password: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="
 
 ## 🧪 PASO 10: Testear la Aplicación
 
-1. **Abrir http://localhost:3000** en tu navegador
+1. **Abrir http://localhost:8000** en tu navegador
 
 2. **Verificar en la página principal:**
    - ✅ Se ven las 4 publicaciones con imágenes
