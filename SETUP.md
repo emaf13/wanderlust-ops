@@ -410,6 +410,21 @@ Password: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="
 
 ---
 
+## 📊 Resumen de Puertos y Servicios
+
+| **Servicio** | **Puerto** | **URL** | **Archivo** |
+|---|---|---|---|
+| Frontend | **8000** | http://localhost:8000 | kubernetes/frontend.yaml |
+| Backend API | **3001** | http://localhost:3001 | kubernetes/backend.yaml |
+| API Docs (Swagger) | **3001** | http://localhost:3001/api-docs | backend/src/config/swagger.js |
+| Grafana | **3000** | http://localhost:3000 | helm/prometheus-stack-values.yaml |
+| Prometheus | **9090** | http://localhost:9090 | helm/prometheus-stack-values.yaml |
+| ArgoCD | **8080** | https://localhost:8080 | argocd/application.yaml |
+
+> **Nota:** Swagger UI se sirve desde el mismo contenedor del backend (puerto 3001). No es un servicio separado de Kubernetes. La configuración está en `backend/src/config/swagger.js`.
+
+---
+
 ## 📚 Archivos Importantes del Proyecto
 
 | **Archivo/Carpeta**                       | **Propósito**                                           |

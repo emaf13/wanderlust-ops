@@ -1,4 +1,4 @@
-# 🌍 Roxs Wanderlust
+# 🗺️ Wanderlust Ops
 
 <div align="center">
 
@@ -30,7 +30,7 @@
 
 ## 🎯 Acerca del Proyecto
 
-**Roxs Wanderlust** es una plataforma moderna de blog de viajes diseñada con arquitectura de microservicios, lista para despliegue en contenedores y cloud-native. El proyecto demuestra mejores prácticas en desarrollo full-stack, contenedorización y orquestación con Kubernetes.
+**Wanderlust Ops** es una plataforma moderna de blog de viajes diseñada con arquitectura de microservicios, lista para despliegue en contenedores y cloud-native. El proyecto demuestra mejores prácticas en desarrollo full-stack, contenedorización y orquestación con Kubernetes.
 
 Este proyecto es una implementación mejorada del proyecto open-source [Wanderlust](https://github.com/krishnaacharyaa/wanderlust) de Krishna Acharya, con enfoque en DevOps, containerización y mejores prácticas de desarrollo.
 
@@ -79,44 +79,9 @@ Este proyecto es una implementación mejorada del proyecto open-source [Wanderlu
 ### Infraestructura
 
 - **Contenedores:** Docker, Docker Compose
-- **Orquestación:** Kubernetes (Minikube)
+- **Orquestación:** Kubernetes (Kind)
 - **Proxy:** NGINX Ingress Controller
-- **Registry:** Docker Hub (roxsross12)
-
----
-
-## 🚀 Inicio Rápido
-
-### Prerrequisitos
-
-```bash
-# Verificar instalaciones requeridas
-node --version  # v21+
-docker --version  # 20.10+
-docker-compose --version  # 2.0+
-```
-
-### Instalación en 3 Pasos
-
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/roxsross/roxs-wanderlust-ops.git
-cd roxs-wanderlust-ops
-
-# 2. Configurar variables de entorno
-cp .env.example backend/.env
-# Editar backend/.env con tus credenciales
-
-# 3. Iniciar con Docker Compose
-docker-compose up --build
-```
-
-🎉 **¡Listo!** Accede a:
-- 🌐 **Frontend:** http://localhost
-- 🔌 **API:** http://localhost:8080/api
-- 📚 **Swagger:** http://localhost:8080/api-docs
-
-> 💡 **Tip:** Para instalación detallada, opciones de despliegue y troubleshooting, consulta la [Documentación Completa](#-documentación-completa)
+- **Registry:** Docker Hub (emaf13)
 
 ---
 
@@ -390,16 +355,7 @@ Toda la documentación detallada está organizada en [Assets/docs/](./Assets/doc
 #### Acceder a Swagger UI
 
 La API está completamente documentada con OpenAPI 3.0 y accesible en:
-
-**Docker Compose:**
-- http://localhost:8080/api-docs
-- http://api.127.0.0.1.nip.io/api-docs
-
-**Kubernetes:**
-- http://api.wanderlust.127.0.0.1.nip.io/api-docs
-
-**Producción:**
-- https://your-domain.com/api-docs
+- http://localhost:3001/api-docs
 
 #### Endpoints Principales
 
@@ -698,6 +654,21 @@ kubectl get pods -n monitoring
 # Port-forward
 kubectl port-forward -n wanderlust svc/frontend-service 8000:80
 ```
+
+---
+
+## 📊 Resumen de Puertos y Servicios
+
+| **Servicio** | **Puerto** | **URL** | **Archivo** |
+|---|---|---|---|
+| Frontend | **8000** | http://localhost:8000 | kubernetes/frontend.yaml |
+| Backend API | **3001** | http://localhost:3001 | kubernetes/backend.yaml |
+| API Docs (Swagger) | **3001** | http://localhost:3001/api-docs | backend/src/config/swagger.js |
+| Grafana | **3000** | http://localhost:3000 | helm/prometheus-stack-values.yaml |
+| Prometheus | **9090** | http://localhost:9090 | helm/prometheus-stack-values.yaml |
+| ArgoCD | **8080** | https://localhost:8080 | argocd/application.yaml |
+
+> **Nota:** Swagger UI se sirve desde el mismo contenedor del backend (puerto 3001). No es un servicio separado de Kubernetes. La configuración está en `backend/src/config/swagger.js`.
 
 ---
 
